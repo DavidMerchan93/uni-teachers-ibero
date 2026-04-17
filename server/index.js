@@ -63,14 +63,15 @@ app.post('/docentes', (req, res) => {
     const { nombre, correo, telefono, titulo, area_academica, dedicacion, anios_experiencia } = req.body;
 
     // Valida que todos los campos estén presentes y no vacíos
-    if (!nombre?.trim() || !correo?.trim() || !telefono?.trim() || !titulo?.trim() || !area_academica?.trim() || !dedicacion?.trim() || !anios_experiencia?.trim()) {
+    if (!nombre?.trim() || !correo?.trim() || !telefono?.trim() || !titulo?.trim() || !area_academica?.trim() || !dedicacion?.trim()) {
         return res.status(400).json({ error: 'todos los campos son requeridos' });
     }
 
+    // anios_experiencia puede llegar como número o texto, se convierte siempre
     const anios = Number(anios_experiencia);
 
-    // Valida que los años de experiencia sean un número positivo
-    if (Number.isNaN(anios) || anios < 0) {
+    // Valida que los años de experiencia sean un número válido y positivo
+    if (anios_experiencia === undefined || anios_experiencia === null || Number.isNaN(anios) || anios < 0) {
         return res.status(400).json({ error: 'anios de experiencia invalidos' });
     }
 
@@ -103,13 +104,13 @@ app.put('/docentes/:id', (req, res) => {
     const { nombre, correo, telefono, titulo, area_academica, dedicacion, anios_experiencia } = req.body;
 
     // Valida que todos los campos estén presentes y no vacíos
-    if (!nombre?.trim() || !correo?.trim() || !telefono?.trim() || !titulo?.trim() || !area_academica?.trim() || !dedicacion?.trim() || !anios_experiencia?.trim()) {
+    if (!nombre?.trim() || !correo?.trim() || !telefono?.trim() || !titulo?.trim() || !area_academica?.trim() || !dedicacion?.trim()) {
         return res.status(400).json({ error: 'todos los campos son requeridos' });
     }
 
     const anios = Number(anios_experiencia);
 
-    if (Number.isNaN(anios) || anios < 0) {
+    if (anios_experiencia === undefined || anios_experiencia === null || Number.isNaN(anios) || anios < 0) {
         return res.status(400).json({ error: 'anios de experiencia invalidos' });
     }
 
